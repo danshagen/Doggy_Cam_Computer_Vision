@@ -1,0 +1,17 @@
+# Exported using VGG Image Annotator (http://www.robots.ox.ac.uk/~vgg/software/via)
+# CSV_HEADER = metadata_id,file_list,temporal_segment_start,temporal_segment_end,metadata
+"1_Txt6XPmE","[""John_1.mp4""]",11.50208,18.02625,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_hrCrOaQS","[""John_1.mp4""]",24.37958,77.13229,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_BpEXUBFR","[""John_1.mp4""]",239.77917,257.52917,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_xkJDL0EV","[""John_1.mp4""]",262.164,277.66021,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_77X03ZPo","[""John_1.mp4""]",288.429,290.58053,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_RJi6yhcj","[""John_1.mp4""]",297.345,302.05687,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_XfsXkuMC","[""John_1.mp4""]",341.7332,345.52917,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_4zj1IYxI","[""John_1.mp4""]",357.77917,374.18942,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_nXzlj3sA","[""John_1.mp4""]",388.006,405.09545,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_3fffQNaH","[""John_1.mp4""]",621.044,628.06891,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_BNGHXD7X","[""John_1.mp4""]",718.387,732.9894,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_Y5oAdfRD","[""John_1.mp4""]",737.619,738.43993,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_OgRCUrme","[""John_1.mp4""]",976.31493,978.68993,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_TI2P8qWo","[""John_1.mp4""]",983.395,989.47599,"{""TEMPORAL-SEGMENTS"":""activity""}"
+"1_dfvxXMnG","[""John_1.mp4""]",1107.482,1120.1691,"{""TEMPORAL-SEGMENTS"":""activity""}"
