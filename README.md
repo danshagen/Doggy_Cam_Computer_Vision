@@ -30,6 +30,13 @@ The project has the following folders and files (not complete):
 All python modules and scripts are put in the project root folder. The input and
 output files are in subfolders, as shown above.
 
+# Workflow
+For developing and improving the algorithm, the following workflow is proposed:
+
+ 1. Change algorithm in algorithm.py
+ 2. Run algorithm on a video or all videos with run_algorithm.py (or Makefile)
+ 3. Evaluate algorithm with evaluate_algorithm.py and see if result is better than before
+
 # Running the algorithm
 For running the algorithm, the module `run_algorithm.py` was created, that has a
 commandline interface. Here a version of the commandline interface help is shown:
