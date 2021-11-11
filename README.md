@@ -63,4 +63,10 @@ optional arguments:
 
 For running the algorithm on more than one video file, a Makefile can be used. 
 The Makefile can detect all video files and then run the script for each 
-video file in the video folder. (TODO)
+video file in the video folder.
+
+When running with the flag `--show`, an overlay is shown for the algorithm output and the reference data (if available). It looks like this:
+
+![](img/run_algorithm_ref.png)
+
+The circle in front (green) is the output of the algorithm and the circle half shown (red) is the reference. Red means motion and green calm.

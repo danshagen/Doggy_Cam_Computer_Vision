@@ -3,3 +3,4 @@ video/full/
 video/.DS_Store
 venv/
 image/
+__pycache__/

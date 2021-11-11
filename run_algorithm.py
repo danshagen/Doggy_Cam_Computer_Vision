@@ -1,7 +1,7 @@
 """This module is the commandline interface to the algorithm.
 
 It handles the commandline interface, the files and the extraction of images from
-the videos."""
+the videos. If a reference file is found, the reference is also shown in the video."""
 
 import plac
 import numpy as np
@@ -10,7 +10,7 @@ import os
 from algorithm import motion_detection, get_algorithm_version
 import pickle
 
-RED = (255, 0, 0)
+RED = (0, 0, 255)
 GREEN = (0, 255, 0)
 
 @plac.pos('file', 'The video file path to run the algorithm on.')
@@ -32,6 +32,19 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
 	print('framerate: {}, frame count: {}'.format(framerate, frame_count))
 
+	# try to find reference file
+	reference_available = False
+	reference = None
+	try:
+		reference_filename = 'reference/{}_ref.pkl'.format(filename.split('.')[0])
+		print(reference_filename)
+		with open(reference_filename, 'rb') as ref_file:
+			reference = pickle.load(ref_file)
+			print('Reference loaded.')
+			reference_available = True
+	except FileNotFoundError:
+		print('Reference file not found.')
+
 	result = np.zeros(frame_count ,dtype=bool)
 	# processing loop
 	for n in range(frame_count-1):
@@ -45,9 +58,16 @@ def run_algorithm(file: str, show: bool=False) -> None:
 		result[n] = motion_detection(frame)
 
 		if show:
-			# TODO: add indicator of result
+			# add indicator for reference
+			if reference_available:
+				col = RED if reference['reference'][n] else GREEN
+				cv2.circle(frame, center=(10, 10), radius=10, 
+					color=col, thickness=-1)
+			# add indicator for algorithm
 			col = RED if result[n] else GREEN
-			cv2.circle(frame, center=(10, 10), radius=10, color=col, thickness=-1)
+			cv2.circle(frame, center=(20, 10), radius=10, 
+				color=col, thickness=-1)
+			# show image
 			cv2.imshow('Doggy Cam', frame)
 
 		key = cv2.waitKey(1)
