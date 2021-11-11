@@ -49,7 +49,7 @@ def convert_annotation(file: str) -> None:
 	data['frame_count'] = frame_count
 	data['reference'] = reference
 
-	write_filename = 'reference/{}_ref.pkl'.format(filename.split('.')[0])
+	write_filename = 'reference/{}.pkl'.format(filename.split('.')[0])
 	with open(write_filename, 'wb') as write_file:
 		pickle.dump(data, write_file)
 

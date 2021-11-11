@@ -36,7 +36,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	reference_available = False
 	reference = None
 	try:
-		reference_filename = 'reference/{}_ref.pkl'.format(filename.split('.')[0])
+		reference_filename = 'reference/{}.pkl'.format(filename.split('.')[0])
 		print(reference_filename)
 		with open(reference_filename, 'rb') as ref_file:
 			reference = pickle.load(ref_file)
