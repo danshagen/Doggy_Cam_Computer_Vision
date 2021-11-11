@@ -65,8 +65,49 @@ For running the algorithm on more than one video file, a Makefile can be used.
 The Makefile can detect all video files and then run the script for each 
 video file in the video folder.
 
-When running with the flag `--show`, an overlay is shown for the algorithm output and the reference data (if available). It looks like this:
+When running with the flag `--show`, an overlay is shown for the algorithm 
+output and the reference data (if available). It looks like this:
 
 ![](img/run_algorithm_ref.png)
 
-The circle in front (green) is the output of the algorithm and the circle half shown (red) is the reference. Red means motion and green calm.
+The circle in front (green) is the output of the algorithm and the circle half 
+shown (red) is the reference. Red means motion and green calm.
+
+# Evaluating the algorithm
+The evaluation script is started like this:
+
+```
+> python3 evaluate_algorithm.py dummy_v1
+```
+It takes a string describing the algorithm version and finds the output and 
+reference data automatically. The help menu is shown here:
+```
+> python3 evaluate_algorithm.py -h
+usage: evaluate_algorithm.py [-h] algorithm
+
+Evaluate the output of the given algorithm against the reference data.
+
+  Finds the algorithm output data automatically from the output folder and
+  loads the corresponding reference data. It outputs the evaluation on the 
+  terminal.
+
+  TODO: save the data
+
+positional arguments:
+  algorithm   Algorithm name, for example dummy_v1
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+The output for the dummy_v1 algorithm (never detect motion) for the first video
+with annotation:
+
+```
+> python3 evaluate_algorithm.py dummy_v1
+Algorithm data files found: ['output/John_1-dummy_v1.pkl']
+Reference data files found: ['reference/John_1.pkl']
+File: John_1
+  True positives:   0.0s of 180.0s (0.0%), 0 of 1351 frames.
+  False positives:  0.0s (0 frames).
+```
