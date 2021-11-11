@@ -1,4 +1,5 @@
 video/full/
-.DS_Store/
+.DS_Store
+video/.DS_Store
 venv/
 image/
