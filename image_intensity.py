@@ -1,21 +1,8 @@
 import numpy as np
 import cv2 as cv
 
-def sum_intensity(img):
-    h = img.shape[0]
-    w = img.shape[1]
-    sum = 0
-
-    for y in range(0,h):
-        for x in range(0,w):
-            sum += img[y,x]
-
-    return sum
-
 def check_threshold(x, threshold):
-    if x >= threshold:
-        return True
-    return False
+    return x >= threshold
 
 def main():
     import os
@@ -24,7 +11,7 @@ def main():
     img = cv.imread(filename)
     img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     threshold = 5
-    intensity = sum_intensity(img)
+    intensity = img.sum() # image is just numpy array
     
     print('threshold = ' + str(threshold))
     print('intensity = ' + str(intensity))
