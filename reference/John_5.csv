@@ -1,0 +1,5 @@
+# Exported using VGG Image Annotator (http://www.robots.ox.ac.uk/~vgg/software/via)
+# CSV_HEADER = metadata_id,file_list,temporal_segment_start,temporal_segment_end,metadata
+"8_g9btGy0l","[""John_5.mp4""]",0,4.58542,"{""TEMPORAL-SEGMENTS"":""default""}"
+"8_X8FsiMGk","[""John_5.mp4""]",1046.572,1049.91194,"{""TEMPORAL-SEGMENTS"":""default""}"
+"8_ShE1HrMA","[""John_5.mp4""]",1056.106,1059.7223,"{""TEMPORAL-SEGMENTS"":""default""}"
