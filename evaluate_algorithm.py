@@ -4,6 +4,7 @@ import plac
 import os
 import numpy as np
 import pickle
+import sys
 
 @plac.pos('algorithm', 'Algorithm name, for example dummy_v1', type=str)
 def evaluate_algorithm(algorithm: str) -> None:
@@ -60,7 +61,13 @@ def evaluate_algorithm(algorithm: str) -> None:
 def analyse_true_positives(reference, algorithm) -> (int, int, int, int, float):
 	ref_frames = np.where(reference['reference'] == True)[0]
 	total_positives = len(ref_frames)
-	alg_positives = np.sum(algorithm['result'][ref_frames])
+
+	try:
+		alg_positives = np.sum(algorithm['result'][ref_frames])
+	except:
+		print('Frame ' + str(max(ref_frames)) + ' not in results of algorithm.')
+		print('Last available frame: ' + str(len(algorithm['result'])))
+		sys.exit()
 
 	framerate = reference['framerate']
 	return (total_positives/framerate, alg_positives/framerate,
