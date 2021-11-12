@@ -8,7 +8,7 @@ import numpy as np
 import cv2 as cv
 
 ALGORITHM_NAME = 'dummy'
-ALGORITHM_VERSION = 'v1'
+ALGORITHM_VERSION = 'v1.1'
 
 def motion_detection(image: np.array) -> bool:
     """This function is called for every image in a video and returns whether 
@@ -26,7 +26,7 @@ def motion_detection(image: np.array) -> bool:
     # print('above threshold? ' + str(check_threshold(intensity,threshold)))
 
     # dummy value: always return false
-    return False
+    return True
 
 def motion_detection_reset() -> None:
     """This functions resets the algorithm to be ready for a new video stream."""
