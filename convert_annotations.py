@@ -9,6 +9,8 @@ import numpy as np
 import cv2
 import pickle
 
+import file_handler
+
 def convert_annotation(file: str) -> None:
 	filename = os.path.basename(file)
 	print('Converting annotations from file: {}'.format(filename))
@@ -63,7 +65,8 @@ def timestamp_to_sample(timestamp, framerate) -> int:
 def get_video_info(filename) -> (float, int):
 	video = cv2.VideoCapture(filename)
 	framerate = video.get(cv2.CAP_PROP_FPS)
-	frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+	_, algorithm_data, _ = file_handler.find_algorithm_output('dummy_v1.1')
+	frame_count = algorithm_data['frame_count'] # get actual frame count
 	return (framerate, frame_count)
 
 
