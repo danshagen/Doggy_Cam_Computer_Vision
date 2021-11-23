@@ -7,8 +7,8 @@ images and returns the algorithm output of whether dog motion was detected."""
 import numpy as np
 import cv2 as cv
 
-ALGORITHM_NAME = 'dummy'
-ALGORITHM_VERSION = 'v1.1'
+ALGORITHM_NAME = 'intensity'
+ALGORITHM_VERSION = 'v1'
 
 def motion_detection(image: np.array) -> bool:
     """This function is called for every image in a video and returns whether 
@@ -27,6 +27,10 @@ def motion_detection(image: np.array) -> bool:
 
     # dummy value: always return false
     return True
+
+def get_intensity(image: np.array):
+    sum = image.sum()
+    return sum
 
 def motion_detection_reset() -> None:
     """This functions resets the algorithm to be ready for a new video stream."""
