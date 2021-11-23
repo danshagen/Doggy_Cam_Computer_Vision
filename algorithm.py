@@ -8,7 +8,7 @@ import numpy as np
 import cv2 as cv
 
 ALGORITHM_NAME = 'dummy'
-ALGORITHM_VERSION = 'v1.1'
+ALGORITHM_VERSION = 'v2'
 
 def motion_detection(image: np.array) -> bool:
     """This function is called for every image in a video and returns whether 
