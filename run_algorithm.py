@@ -11,7 +11,7 @@ from algorithm import motion_detection, get_algorithm_version
 import pickle
 
 RED = (0, 0, 255)
-GREEN = (0, 255, 0)
+WHITE = (0, 255, 0)
 
 @plac.pos('file', 'The video file path to run the algorithm on.')
 @plac.flg('show', 'Show the algorithm output live')
@@ -19,7 +19,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	"""Run the motion detection algorithm on the given file.
 
 	It can show the processing happening live. The current motion detection
-	output is shown as a colored circle on top of the video in green (calm) or 
+	output is shown as a colored circle on top of the video in WHITE (calm) or 
 	red (motion detected).
 	The output is saved in the folder output.
 	The execution can be quit by pressing q, when focusing the output window."""
@@ -62,11 +62,11 @@ def run_algorithm(file: str, show: bool=False) -> None:
 		if show:
 			# add indicator for reference
 			if reference_available:
-				col = RED if reference['reference'][n] else GREEN
+				col = RED if reference['reference'][n] else WHITE
 				cv2.circle(frame, center=(10, 10), radius=10, 
 					color=col, thickness=-1)
 			# add indicator for algorithm
-			col = RED if result[n] else GREEN
+			col = RED if result[n] else WHITE
 			cv2.circle(frame, center=(20, 10), radius=10, 
 				color=col, thickness=-1)
 			# show image
