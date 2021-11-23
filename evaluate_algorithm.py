@@ -80,8 +80,7 @@ def analyse_true_positives(reference, algorithm) -> (int, int, int, int, float):
 
 def analyse_false_positives(reference, algorithm) -> (int, int):
 	alg_positives = np.where(algorithm['result'] == True)[0]
-	false_positives = np.sum(np.where(
-		reference['reference'][alg_positives] == False))
+	false_positives = len(np.where(reference['reference'][alg_positives] == False)[0])
 
 	framerate = reference['framerate']
 	return (false_positives/framerate, false_positives)
