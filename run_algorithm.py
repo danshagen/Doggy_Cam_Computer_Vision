@@ -7,8 +7,9 @@ import plac
 import numpy as np
 import cv2
 import os
-from algorithm import motion_detection, get_algorithm_version
+from algorithm import motion_detection, get_algorithm_version, get_intensity
 import pickle
+
 
 RED = (0, 0, 255)
 WHITE = (255, 255, 255)
@@ -46,6 +47,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 		print('Reference file not found.')
 
 	result = np.zeros(frame_count ,dtype=bool)
+	intensity = np.zeros(frame_count)
 	# processing loop
 	for n in range(frame_count-1):
 		_, frame = video.read()
@@ -58,6 +60,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 		# pass image to run_algorithm and save the result
 		result[n] = motion_detection(frame)
+		intensity[n] = get_intensity(frame)
 
 		if show:
 			# add indicator for reference
@@ -78,8 +81,18 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			print('Quitting...')
 			exit()
 
-	# TODO: shorten result array to actual length?
+	# shorten result & intensity array to actual length
 	result = result[:frame_count]
+	intensity = intensity[:frame_count]
+
+	# 2-D array with intensity and the annotated values for 
+	diff = len(reference['reference'])-len(intensity)
+	intensity = np.insert(intensity,len(intensity),np.zeros(diff))
+	temp = np.vstack((reference['reference'],intensity))
+	temp = temp.T
+
+	# export temp to csv 
+	np.savetxt('output/intensity.csv', temp, delimiter=',')
 
 	# save result with framerate and frame count in pickle file
 	data = {}
