@@ -52,6 +52,8 @@ def run_algorithm(file: str, show: bool=False) -> None:
 		# check if frame was read
 		if frame is None:
 			print('End of video! frame {} of {}'.format(n, frame_count))
+			frame_count = n
+			print('Frame count set to actual amount: {}'.format(frame_count))
 			break
 
 		# pass image to run_algorithm and save the result
@@ -77,6 +79,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			exit()
 
 	# TODO: shorten result array to actual length?
+	result = result[:frame_count]
 
 	# save result with framerate and frame count in pickle file
 	data = {}

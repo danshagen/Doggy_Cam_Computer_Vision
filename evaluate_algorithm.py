@@ -4,6 +4,7 @@ import plac
 import os
 import numpy as np
 import pickle
+import sys
 
 @plac.pos('algorithm', 'Algorithm name, for example dummy_v1', type=str)
 def evaluate_algorithm(algorithm: str) -> None:
@@ -46,6 +47,10 @@ def evaluate_algorithm(algorithm: str) -> None:
 	# compare algorithm vs reference
 	for i in range(len(ref_data)):
 		print('File: {}'.format(video_files[i]))
+
+		frame_count = algorithm_data[i].get('frame_count') 				# get corrected frame count from algortihm output
+		ref_data[i] = update_frame_count(frame_count, ref_data[i])		# slice reference data to correct frame count
+
 		t, a, tf, af, p = analyse_true_positives(ref_data[i], algorithm_data[i])
 		print('  True positives: ', end='')
 		print('  {:.1f}s of {:.1f}s ({:.1f}%), {} of {} frames.'.format(a, t, p, af, tf))
@@ -60,7 +65,13 @@ def evaluate_algorithm(algorithm: str) -> None:
 def analyse_true_positives(reference, algorithm) -> (int, int, int, int, float):
 	ref_frames = np.where(reference['reference'] == True)[0]
 	total_positives = len(ref_frames)
-	alg_positives = np.sum(algorithm['result'][ref_frames])
+
+	try:
+		alg_positives = np.sum(algorithm['result'][ref_frames])
+	except:
+		print('Frame ' + str(max(ref_frames)) + ' not in results of algorithm.')
+		print('Last available frame: ' + str(len(algorithm['result'])))
+		sys.exit()
 
 	framerate = reference['framerate']
 	return (total_positives/framerate, alg_positives/framerate,
@@ -74,6 +85,14 @@ def analyse_false_positives(reference, algorithm) -> (int, int):
 
 	framerate = reference['framerate']
 	return (false_positives/framerate, false_positives)
+
+
+def update_frame_count(frame_count, thisdict):
+	tmp = thisdict.get('reference')
+	tmp = tmp[:frame_count]
+	thisdict.update({'reference':tmp})
+	thisdict.update({'frame_count':frame_count})
+	return thisdict
 
 # TODO: function/module for getting all evaluation data and comparing, plotting
 

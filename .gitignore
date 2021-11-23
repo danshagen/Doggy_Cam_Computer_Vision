@@ -4,3 +4,4 @@ video/.DS_Store
 venv/
 image/
 __pycache__/
+.vscode/
