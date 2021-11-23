@@ -11,7 +11,7 @@ from algorithm import motion_detection, get_algorithm_version
 import pickle
 
 RED = (0, 0, 255)
-WHITE = (0, 255, 0)
+WHITE = (255, 255, 255)
 
 @plac.pos('file', 'The video file path to run the algorithm on.')
 @plac.flg('show', 'Show the algorithm output live')
