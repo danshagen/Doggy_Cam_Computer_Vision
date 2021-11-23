@@ -86,6 +86,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	intensity = intensity[:frame_count]
 
 	# 2-D array with intensity and the annotated values for 
+	# clean up, if wrong frame_count can be fixed
 	diff = len(reference['reference'])-len(intensity)
 	intensity = np.insert(intensity,len(intensity),np.zeros(diff))
 	temp = np.vstack((reference['reference'],intensity))
