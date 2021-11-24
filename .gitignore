@@ -1,4 +1,5 @@
 video/full/
+video/new_encoding/
 .DS_Store
 video/.DS_Store
 venv/
