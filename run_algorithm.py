@@ -34,17 +34,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	print('framerate: {}, frame count: {}'.format(framerate, frame_count))
 
 	# try to find reference file
-	reference_available = False
-	reference = None
-	try:
-		reference_filename = 'reference/{}.pkl'.format(filename.split('.')[0])
-		print(reference_filename)
-		with open(reference_filename, 'rb') as ref_file:
-			reference = pickle.load(ref_file)
-			print('Reference loaded.')
-			reference_available = True
-	except FileNotFoundError:
-		print('Reference file not found.')
+	reference_available, reference = file_handler.load_reference_data(filename)
 
 	result = np.zeros(frame_count ,dtype=bool)
 	# processing loop
