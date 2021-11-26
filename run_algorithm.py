@@ -7,12 +7,18 @@ import plac
 import numpy as np
 import cv2
 import os
-import pickle
 from algorithm import motion_detection, get_algorithm_version
 import file_handler
 
 RED = (0, 0, 255)
 GREEN = (0, 255, 0)
+
+def load_video(file):
+	video = cv2.VideoCapture(file)
+	framerate = video.get(cv2.CAP_PROP_FPS)
+	frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+	print('framerate: {}, frame count: {}'.format(framerate, frame_count))
+	return (video, framerate, frame_count)
 
 @plac.pos('file', 'The video file path to run the algorithm on.')
 @plac.flg('show', 'Show the algorithm output live')
@@ -27,11 +33,9 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 	filename = os.path.basename(file)
 	print('Run algorithm on file: {}'.format(filename))
-
-	video = cv2.VideoCapture(file)
-	framerate = video.get(cv2.CAP_PROP_FPS)
-	frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-	print('framerate: {}, frame count: {}'.format(framerate, frame_count))
+	
+	# load video
+	video, framerate, frame_count = load_video(file)
 
 	# try to find reference file
 	reference_available, reference = file_handler.load_reference_data(filename)
