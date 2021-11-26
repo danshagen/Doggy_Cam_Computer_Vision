@@ -7,8 +7,9 @@ import plac
 import numpy as np
 import cv2
 import os
-from algorithm import motion_detection, get_algorithm_version
 import pickle
+from algorithm import motion_detection, get_algorithm_version
+import file_handler
 
 RED = (0, 0, 255)
 GREEN = (0, 255, 0)
@@ -82,18 +83,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	result = result[:frame_count]
 
 	# save result with framerate and frame count in pickle file
-	data = {}
-	data['framerate'] = framerate
-	data['frame_count'] = frame_count
-	data['result'] = result
-	data['version'] = get_algorithm_version()
-
-	save_filename = '{}-{}.pkl'.format(filename.split('.')[0], data['version'])
-
-	with open('output/{}'.format(save_filename), 'wb') as save_file:
-		pickle.dump(data, save_file)
-
-	print('Saved to {}.'.format(save_filename))
+	file_handler.save_algorithm_result(filename, framerate, frame_count, result, get_algorithm_version())
 
 if __name__ == '__main__':
 	plac.call(run_algorithm)
