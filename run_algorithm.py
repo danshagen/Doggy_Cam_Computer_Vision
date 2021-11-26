@@ -47,7 +47,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 	result = np.zeros(frame_count ,dtype=bool)
 	# processing loop
-	for n in range(frame_count-1):
+	for n in range(frame_count):
 		_, frame = video.read()
 		# check if frame was read
 		if frame is None:
