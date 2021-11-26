@@ -1,7 +1,14 @@
 """This module is the commandline interface to the algorithm.
 
 It handles the commandline interface, the files and the extraction of images from
-the videos. If a reference file is found, the reference is also shown in the video."""
+the videos. If a reference file is found, the reference is also shown in the video.
+
+Run the motion detection algorithm on the given file.
+It can show the processing happening live. The current motion detection
+output is shown as a colored circle on top of the video in green (calm) or 
+red (motion detected).
+The output is saved in the folder output.
+The execution can be quit by pressing q, when focusing the output window."""
 
 import plac
 import numpy as np
@@ -23,13 +30,6 @@ def load_video(file):
 @plac.pos('file', 'The video file path to run the algorithm on.')
 @plac.flg('show', 'Show the algorithm output live')
 def run_algorithm(file: str, show: bool=False) -> None:
-	"""Run the motion detection algorithm on the given file.
-
-	It can show the processing happening live. The current motion detection
-	output is shown as a colored circle on top of the video in green (calm) or 
-	red (motion detected).
-	The output is saved in the folder output.
-	The execution can be quit by pressing q, when focusing the output window."""
 
 	filename = os.path.basename(file)
 	print('Run algorithm on file: {}'.format(filename))
@@ -40,15 +40,17 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	# try to find reference file
 	reference_available, reference = file_handler.load_reference_data(filename)
 
-	result = np.zeros(frame_count ,dtype=bool)
 	# processing loop
+	result = np.zeros(frame_count ,dtype=bool)
 	for n in range(frame_count):
 		_, frame = video.read()
-		# check if frame was read
+
+		# error in frame count
 		if frame is None:
 			print('End of video! frame {} of {}'.format(n, frame_count))
+			print('Slicing result list to match new frame count: {}'.format(n))
+			result = result[:n]
 			frame_count = n
-			print('Frame count set to actual amount: {}'.format(frame_count))
 			break
 
 		# pass image to run_algorithm and save the result
@@ -72,9 +74,6 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			# allow quitting by pressing q
 			print('Quitting...')
 			exit()
-
-	# TODO: shorten result array to actual length?
-	result = result[:frame_count]
 
 	# save result with framerate and frame count in pickle file
 	file_handler.save_algorithm_result(filename, framerate, frame_count, result, get_algorithm_version())
