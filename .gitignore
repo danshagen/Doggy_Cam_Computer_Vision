@@ -1,8 +1,7 @@
-video/full/
-video/new_encoding/
-.DS_Store
-video/.DS_Store
 venv/
-image/
 __pycache__/
 .vscode/
+.DS_Store
+img/
+output/
+video/
