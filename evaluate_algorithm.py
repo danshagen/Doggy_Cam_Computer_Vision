@@ -1,13 +1,12 @@
 """This module evaluates the output of the algorithm against the reference."""
 
 import plac
-import os
 import numpy as np
-import pickle
 import sys
+import file_handler
 
 @plac.pos('algorithm', 'Algorithm name, for example dummy_v1', type=str)
-def evaluate_algorithm(algorithm: str) -> None:
+def evaluate_algorithm(algorithm_version: str) -> None:
 	"""Evaluate the output of the given algorithm against the reference data.
 	
 	Finds the algorithm output data automatically from the output folder and
@@ -16,33 +15,16 @@ def evaluate_algorithm(algorithm: str) -> None:
 
 	TODO: save the data"""
 	
-	# find all algorithm output files
-	algorithm_files = []
-	algorithm_data = []
-	video_files = []
-	for file in os.scandir('output'):
-		if algorithm in file.name:
-			algorithm_files.append('output/{}'.format(file.name))
-			video_files.append(file.name.split('.')[0][:file.name.find(algorithm)-1])
-	print('Algorithm data files found: {}'.format(algorithm_files))
-	for file in algorithm_files:
-		with open(file, 'rb') as alg_file: 
-			algorithm_data.append(pickle.load(alg_file))
-
-	# find the corresponding reference files
-	ref_files = []
+	# find and load all algorithm output files
+	algorithm_files, video_files = file_handler.scan_algortihm_files(algorithm_version)
+	algorithm_data = file_handler.load_algorithm_data(algorithm_files)
+	
+	# find and load the corresponding reference files
 	ref_data = []
-	for file in video_files:
-		ref_file = 'reference/{}.pkl'.format(file)
-		if not os.path.exists(ref_file):
-			print('reference for file {}.mp4 not found!'.format(file))
-			# TODO: remove algorithm file
-		else:
-			ref_files.append(ref_file)
-	print('Reference data files found: {}'.format(ref_files))
+	ref_files = file_handler.scan_reference_files(video_files)
 	for file in ref_files:
-		with open(file, 'rb') as ref_file:
-			ref_data.append(pickle.load(ref_file))
+		_, tmp = file_handler.load_reference_data(file)
+		ref_data.append(tmp)
 
 	# compare algorithm vs reference
 	for i in range(len(ref_data)):
@@ -80,8 +62,7 @@ def analyse_true_positives(reference, algorithm) -> (int, int, int, int, float):
 
 def analyse_false_positives(reference, algorithm) -> (int, int):
 	alg_positives = np.where(algorithm['result'] == True)[0]
-	false_positives = np.sum(np.where(
-		reference['reference'][alg_positives] == False))
+	false_positives = len(np.where(reference['reference'][alg_positives] == False)[0])
 
 	framerate = reference['framerate']
 	return (false_positives/framerate, false_positives)

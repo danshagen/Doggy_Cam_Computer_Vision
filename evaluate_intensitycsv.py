@@ -5,6 +5,7 @@ read csv file and calculates mean over all annotated 1's and mean over all annot
 import numpy as np
 import os
 import plac
+import matplotlib.pyplot as plt
 
 
 @plac.pos('file', 'the CSV-File to be analized')
@@ -53,6 +54,28 @@ def calculate_means(file):
     print('the middle-threshold would be at {}'.format(truesum/truecounter - falsesum/falsecounter))
 
     print('minimal active value: {}'.format(mintrue))
+
+    print('Printing Histogram...')
+
+    plt.hist(np.delete(array.T,0,0).T)
+    plt.title('Histogram of intensities')
+    plt.ylabel('n')
+    plt.xlabel('Intensity')
+
+    plt.show()
+
+    print('Printing normalized histogram')
+    norm = array[:,1]/max(array[:,1])
+    
+    plt.hist(norm)
+    plt.xlabel('normalized intensities')
+    plt.ylabel('n')
+    plt.title('normalized histogram')
+
+    plt.show()
+
+    plt.hist(np.where(array[0] == True))
+
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
-video/full/
-.DS_Store
-video/.DS_Store
 venv/
-image/
 __pycache__/
 .vscode/
+.DS_Store
+img/
+output/
+video/
