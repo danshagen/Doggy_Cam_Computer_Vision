@@ -71,6 +71,12 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			col = RED if result[n] else GREEN
 			cv2.circle(frame, center=(20, 10), radius=10, color=col, thickness=-1)
 			cv2.circle(img_back_sub, center=(20, 10), radius=10, color=col, thickness=-1)
+
+			# add frame number
+			font = cv2.FONT_HERSHEY_SIMPLEX
+			string = '{}/{}'.format(n,frame_count)
+			cv2.putText(frame, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
+			cv2.putText(img_back_sub, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
 			
 			# show image
 			cv2.imshow('Doggy Cam: Standard View', frame)
