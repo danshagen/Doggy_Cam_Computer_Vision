@@ -69,23 +69,25 @@ def calculate_means(file):
 
     f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(20,20))
 
-    ax1.hist(np.delete(array.T,0,0).T)
+    ax1.hist(np.delete(array.T,0,0).T,log=True, bins=100)
     ax1.set_title('Histogram of intensities')
     ax1.set_ylabel('number of frames')
     ax1.set_xlabel('Intensity')
     
-    ax2.hist(norm)
+    ax2.hist(norm, log=True, bins=100)
     ax2.set_xlabel('normalized intensities')
     ax2.set_ylabel('number of frames')
     ax2.set_title('normalized histogram')
 
-    ax3.hist(falsearray)
+    ax3.hist(falsearray,log=True, bins=100)
     ax3.set_title('Histogram of alle frames annotated as \'no movement\'')
     ax3.set_xlabel('normalized intensities')
     ax3.set_ylabel('number of frames')
 
-    ax4.hist(falsearray, label='No moevement')
-    ax4.hist(truearray, label='Movement')
+    
+    ax4.hist(falsearray, bins=100, log=True, label='No moevement')
+    ax4.hist(truearray, bins=100, log=True, label='Movement')
+    
     ax4.set_title('Overlayed with the Histogram dor all frames annotated as \'movement\'')
     ax4.set_xlabel('normalized intensities')
     ax4.set_ylabel('number of frames')
