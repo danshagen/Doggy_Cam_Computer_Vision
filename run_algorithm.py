@@ -16,6 +16,7 @@ import cv2
 import os
 from algorithm import motion_detection, get_algorithm_version
 import file_handler
+import img_processor
 
 RED = (0, 0, 255)
 GREEN = (0, 255, 0)
@@ -57,17 +58,29 @@ def run_algorithm(file: str, show: bool=False) -> None:
 		result[n] = motion_detection(frame)
 
 		if show:
+			
+			img_back_sub = img_processor.get_background_substracted_img(frame)
+			img_back_sub = img_processor.convert2color(img_back_sub)
+
 			# add indicator for reference
 			if reference_available:
 				col = RED if reference['reference'][n] else GREEN
-				cv2.circle(frame, center=(10, 10), radius=10, 
-					color=col, thickness=-1)
+				cv2.circle(frame, center=(10, 10), radius=10, color=col, thickness=-1)
+				cv2.circle(img_back_sub, center=(10, 10), radius=10, color=col, thickness=-1)
 			# add indicator for algorithm
 			col = RED if result[n] else GREEN
-			cv2.circle(frame, center=(20, 10), radius=10, 
-				color=col, thickness=-1)
+			cv2.circle(frame, center=(20, 10), radius=10, color=col, thickness=-1)
+			cv2.circle(img_back_sub, center=(20, 10), radius=10, color=col, thickness=-1)
+
+			# add frame number
+			font = cv2.FONT_HERSHEY_SIMPLEX
+			string = '{}/{}'.format(n,frame_count)
+			cv2.putText(frame, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
+			cv2.putText(img_back_sub, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
+			
 			# show image
-			cv2.imshow('Doggy Cam', frame)
+			cv2.imshow('Doggy Cam: Standard View', frame)
+			cv2.imshow('Doggy Cam: Background Substraction', img_back_sub)
 
 		key = cv2.waitKey(1)
 		if key & 0xFF == ord('q'):
