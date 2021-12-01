@@ -56,5 +56,7 @@ def load_reference_data(filename):
         print('Reference file not found.')
         return (False, None)
 
-def save_csv(intensities):
-	np.savetxt('output/intensity.csv', intensities, delimiter=',')
+def save_csv(filename, algorithm_version, intensities):
+	save_filename = '{}-{}_intensitys.csv'.format(filename.split('.')[0], algorithm_version)
+	np.savetxt('output/{}'.format(save_filename), intensities, delimiter=',')
+	print('Saved intensities to {}'.format(save_filename))

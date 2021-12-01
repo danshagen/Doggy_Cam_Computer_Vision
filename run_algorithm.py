@@ -88,7 +88,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 	temp = temp.T
 
 	# export temp to csv 
-	file_handler.save_csv(temp)
+	file_handler.save_csv(filename, get_algorithm_version(), temp)
 
 	# save result with framerate and frame count in pickle file
 	file_handler.save_algorithm_result(filename, framerate, frame_count, result, get_algorithm_version())
