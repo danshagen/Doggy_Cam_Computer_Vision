@@ -6,6 +6,7 @@ images and returns the algorithm output of whether dog motion was detected."""
 
 import numpy as np
 import cv2 as cv
+import collections
 
 ALGORITHM_NAME = 'intensity'
 ALGORITHM_VERSION = 'v2'
@@ -36,6 +37,47 @@ def motion_detection(frame: np.array) -> bool:
 
     # return true
     return result
+
+def identify_short_movements(algortihm_data):
+    
+    # shortest possible movement: n number of frames = 1 sec * 7 frames/sec
+    # 7 frames plus one more on each side to identify a sequence of 7
+    de = collections.deque(np.zeros(9, dtype=bool))
+    idx_list = []
+    for i, frame in enumerate(algortihm_data):
+        de.popleft()
+        de.append(frame)
+        if de.count(False) is len(de): continue
+        if de[-8] and not de[-9]:   
+            if de[-7]:
+                if de[-6]:
+                    if de[-5]:
+                        if de[-4]:
+                            if de[-3]:
+                                if de[-2]:
+                                    if de[-1]: continue
+                                    idx_list.append(get_new_idx(i-7, 7))
+                                    continue
+                                idx_list.append(get_new_idx(i-7, 6))
+                                continue
+                            idx_list.append(get_new_idx(i-7, 5))
+                            continue
+                        idx_list.append(get_new_idx(i-7, 4))
+                        continue
+                    idx_list.append(get_new_idx(i-7, 3))
+                    continue
+                idx_list.append(get_new_idx(i-7, 2))
+                continue
+            idx_list.append(get_new_idx(i-7, 1))
+            continue
+    return idx_list
+
+def get_new_idx(frame_number, count):
+    idx_list = []
+    for j in range(count):
+        idx_list.append(frame_number + j)
+    idx_list.sort()
+    return idx_list
 
 def get_intensity(image: np.array):
     back_sub_frame = back_sub.apply(image, learningRate=-1)

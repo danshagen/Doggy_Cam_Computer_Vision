@@ -4,6 +4,7 @@ import plac
 import numpy as np
 import sys
 import file_handler
+import algorithm
 
 @plac.pos('algorithm', 'Algorithm name, for example dummy_v1', type=str)
 def evaluate_algorithm(algorithm_version: str) -> None:
@@ -19,6 +20,19 @@ def evaluate_algorithm(algorithm_version: str) -> None:
 	algorithm_files, video_files = file_handler.scan_algortihm_files(algorithm_version)
 	algorithm_data = file_handler.load_algorithm_data(algorithm_files)
 	
+	# eliminate detected motion that is too short to be true postitiv
+	result = algorithm_data[0].get('result')
+	short_movements = algorithm.identify_short_movements(result)
+	short_movement_count = 0
+	for short_movement in short_movements:
+		for frame_idx in short_movement:
+			print('frame_idx: {}, before: {}, after: {}'.format(frame_idx, result[frame_idx], False))
+			short_movement_count += 1
+			result[frame_idx] = False
+		print('-')
+	print('Updated {} frames.'.format(short_movement_count))
+	algorithm_data[0].update({'result':result})
+
 	# find and load the corresponding reference files
 	ref_data = []
 	ref_files = file_handler.scan_reference_files(video_files)
