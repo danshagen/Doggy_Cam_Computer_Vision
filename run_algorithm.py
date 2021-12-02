@@ -67,12 +67,11 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 			# add indicator for reference
 			if reference_available:
-<<<<<<< HEAD
-				col = RED if reference['reference'][n] else GREEN
+				col = RED if reference['reference'][n] else WHITE
 				cv2.circle(frame, center=(10, 10), radius=10, color=col, thickness=-1)
 				cv2.circle(img_back_sub, center=(10, 10), radius=10, color=col, thickness=-1)
 			# add indicator for algorithm
-			col = RED if result[n] else GREEN
+			col = RED if result[n] else WHITE
 			cv2.circle(frame, center=(20, 10), radius=10, color=col, thickness=-1)
 			cv2.circle(img_back_sub, center=(20, 10), radius=10, color=col, thickness=-1)
 
@@ -82,15 +81,6 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			cv2.putText(frame, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
 			cv2.putText(img_back_sub, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
 			
-=======
-				col = RED if reference['reference'][n] else WHITE
-				cv2.circle(frame, center=(10, 10), radius=10, 
-					color=col, thickness=-1)
-			# add indicator for algorithm
-			col = RED if result[n] else WHITE
-			cv2.circle(frame, center=(20, 10), radius=10, 
-				color=col, thickness=-1)
->>>>>>> feature/algorithm_v1-#10
 			# show image
 			cv2.imshow('Doggy Cam: Standard View', frame)
 			cv2.imshow('Doggy Cam: Background Substraction', img_back_sub)
