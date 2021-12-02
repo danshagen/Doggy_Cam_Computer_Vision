@@ -8,7 +8,7 @@ import numpy as np
 import cv2 as cv
 
 ALGORITHM_NAME = 'intensity'
-ALGORITHM_VERSION = 'v1'
+ALGORITHM_VERSION = 'v2'
 
 back_sub = cv.createBackgroundSubtractorMOG2()
 
