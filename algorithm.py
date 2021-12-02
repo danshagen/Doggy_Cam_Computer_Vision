@@ -7,26 +7,40 @@ images and returns the algorithm output of whether dog motion was detected."""
 import numpy as np
 import cv2 as cv
 
-ALGORITHM_NAME = 'dummy'
-ALGORITHM_VERSION = 'v2'
+ALGORITHM_NAME = 'intensity'
+ALGORITHM_VERSION = 'v1'
 
-def motion_detection(image: np.array) -> bool:
+back_sub = cv.createBackgroundSubtractorMOG2()
+
+def motion_detection(frame: np.array) -> bool:
     """This function is called for every image in a video and returns whether 
     dog motion and activity was detected for that frame."""
 
+    #back_sub = cv.createBackgroundSubtractorMOG2()
+
+    #back_sub_frame = back_sub.apply(frame, learningRate=-1)
+
     # background subtraction
     # sum all motion pixels
-    sum = image.sum()
+    sum = get_intensity(frame)
 
-    threshold = 5
-    result = sum >= threshold
+    threshold = 1385203
+    result = False
+    if(sum > threshold):
+        result = True
+    #result = sum >= threshold
     # TODO: logging module might be better, so output for every frame can be turned off
     # print('threshold = ' + str(threshold))
     # print('intensity = ' + str(intensity))
     # print('above threshold? ' + str(check_threshold(intensity,threshold)))
 
-    # dummy value: always return false
-    return True
+    # return true
+    return result
+
+def get_intensity(image: np.array):
+    back_sub_frame = back_sub.apply(image, learningRate=-1)
+    sum = back_sub_frame.sum()
+    return sum
 
 def motion_detection_reset() -> None:
     """This functions resets the algorithm to be ready for a new video stream."""
