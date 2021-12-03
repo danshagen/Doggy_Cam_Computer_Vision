@@ -7,15 +7,23 @@ import os
 from numpy.core.fromnumeric import size
 import plac
 import matplotlib.pyplot as plt
+import file_handler
 
 
 @plac.pos('file', 'the CSV-File to be analized')
+@plac.opt('algorithm', 'Algorithm name, for example dummy_v1', type=str)
 
-def calculate_means(file):
+def calculate_means(file, algorithm):
 
 
     filename = os.path.basename(file)
     print('Analyzing file: {}'.format(filename))
+
+    if(algorithm):
+        print('loading algorithm data...')
+        algorithm_files, video_files = file_handler.scan_algortihm_files(algorithm)
+        algorithm_data = file_handler.load_algorithm_data(algorithm_files)
+        
 
     array = np.loadtxt(open(file, 'rb'), delimiter=',')
 
@@ -55,6 +63,15 @@ def calculate_means(file):
             falsecounter += 1
             falsearray = np.insert(falsearray, len(falsearray), norm[i])
             falsesum += array[i,1]
+    
+    if(algorithm):
+        ref_array = np.zeros(len(array))
+        for i in range(len(array)):
+            if(array[i,0] > algorithm_data[0]['result'][i]):
+                ref_array[i] = -1
+            elif(algorithm_data[0]['result'][i] > array[i,0]):
+                ref_array[i] = 1
+    
 
     print('{} frames skipped due to empty intensity. {} were active frames, {} were passive frames'.format(len(array)+emptyfalse+emptytrue, emptytrue, emptyfalse))
 
@@ -94,6 +111,15 @@ def calculate_means(file):
     ax4.legend()
 
     plt.show()
+
+    
+    if(algorithm):
+        plt.figure(figsize=(20,20))
+        plt.plot(ref_array)
+        plt.xlabel('Framenumber')
+        plt.title('False-positives and False-negatives \n\n 1 = False-positive, -1 = False-negative')
+
+        plt.show()
 
 
 if __name__ == '__main__':
