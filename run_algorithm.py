@@ -16,6 +16,7 @@ import cv2
 import os
 from algorithm import motion_detection, get_algorithm_version, get_intensity
 import file_handler
+from evaluate_algorithm import update_frame_count
 
 
 RED = (0, 0, 255)
@@ -40,6 +41,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 	# try to find reference file
 	reference_available, reference = file_handler.load_reference_data(filename)
+	reference = update_frame_count(frame_count, reference)
 
 	# processing loop
 	result = np.zeros(frame_count ,dtype=bool)
@@ -82,8 +84,6 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 	# 2-D array with intensity and the annotated values for 
 	# clean up, if wrong frame_count can be fixed
-	diff = len(reference['reference'])-len(intensity)
-	intensity = np.insert(intensity,len(intensity),np.zeros(diff))
 	temp = np.vstack((reference['reference'],intensity))
 	temp = temp.T
 
