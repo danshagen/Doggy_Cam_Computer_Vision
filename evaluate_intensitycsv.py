@@ -115,6 +115,16 @@ def calculate_means(file, algorithm):
     
     if(algorithm):
         plt.figure(figsize=(20,20))
+        plt.plot(array[:,0], label='Annotation')
+        plt.plot(algorithm_data[0]['result'], label='Algorithm result')
+        plt.ylim([0,10])
+        plt.xlabel('Framenumber')
+        plt.ylabel('Movement')
+        plt.legend(loc='upper right')
+
+        plt.show()
+
+        plt.figure(figsize=(20,20))
         plt.plot(ref_array)
         plt.xlabel('Framenumber')
         plt.title('False-positives and False-negatives \n\n 1 = False-positive, -1 = False-negative')
