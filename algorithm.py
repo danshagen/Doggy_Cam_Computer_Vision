@@ -12,6 +12,12 @@ ALGORITHM_VERSION = 'v1'
 
 back_sub = cv.createBackgroundSubtractorMOG2()
 
+threshold = 1385203
+max_intens = 640 * 480 * 3 * 127        # frame_width x frame_height x number of cahnnels x max value per channel
+max_valid_intens = max_intens * .045
+# TODO soft code max intensity
+
+
 def motion_detection(frame: np.array) -> bool:
     """This function is called for every image in a video and returns whether 
     dog motion and activity was detected for that frame."""
@@ -24,9 +30,8 @@ def motion_detection(frame: np.array) -> bool:
     # sum all motion pixels
     sum = get_intensity(frame)
 
-    threshold = 1385203
     result = False
-    if(sum > threshold):
+    if(sum > threshold and sum < max_valid_intens):
         result = True
     #result = sum >= threshold
     # TODO: logging module might be better, so output for every frame can be turned off
