@@ -8,11 +8,11 @@ import numpy as np
 import cv2 as cv
 
 ALGORITHM_NAME = 'intensity'
-ALGORITHM_VERSION = 'v2'
+ALGORITHM_VERSION = 'v3'
 
 back_sub = cv.createBackgroundSubtractorMOG2(detectShadows=False)
 
-threshold = 1385203
+threshold = 500000
 max_intens = 640 * 480 * 3 * 127        # frame_width x frame_height x number of cahnnels x max value per channel
 max_valid_intens = max_intens * .045
 # TODO soft code max intensity
