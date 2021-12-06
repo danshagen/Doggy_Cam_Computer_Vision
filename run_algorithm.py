@@ -14,12 +14,14 @@ import plac
 import numpy as np
 import cv2
 import os
-from algorithm import motion_detection, get_algorithm_version
+from algorithm import motion_detection, get_algorithm_version, get_intensity
 import file_handler
+from evaluate_algorithm import update_frame_count
 import img_processor
 
+
 RED = (0, 0, 255)
-GREEN = (0, 255, 0)
+WHITE = (255, 255, 255)
 
 def load_video(file):
 	video = cv2.VideoCapture(file)
@@ -40,9 +42,11 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 	# try to find reference file
 	reference_available, reference = file_handler.load_reference_data(filename)
+	reference = update_frame_count(frame_count, reference)
 
 	# processing loop
 	result = np.zeros(frame_count ,dtype=bool)
+	intensity = np.zeros(frame_count)
 	for n in range(frame_count):
 		_, frame = video.read()
 
@@ -56,6 +60,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 		# pass image to run_algorithm and save the result
 		result[n] = motion_detection(frame)
+		intensity[n] = get_intensity(frame)
 
 		if show:
 			
@@ -64,11 +69,12 @@ def run_algorithm(file: str, show: bool=False) -> None:
 
 			# add indicator for reference
 			if reference_available:
-				col = RED if reference['reference'][n] else GREEN
+
+				col = RED if reference['reference'][n] else WHITE
 				cv2.circle(frame, center=(10, 10), radius=10, color=col, thickness=-1)
 				cv2.circle(img_back_sub, center=(10, 10), radius=10, color=col, thickness=-1)
 			# add indicator for algorithm
-			col = RED if result[n] else GREEN
+			col = RED if result[n] else WHITE
 			cv2.circle(frame, center=(20, 10), radius=10, color=col, thickness=-1)
 			cv2.circle(img_back_sub, center=(20, 10), radius=10, color=col, thickness=-1)
 
@@ -78,6 +84,7 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			cv2.putText(frame, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
 			cv2.putText(img_back_sub, string, (100,15), font, 0.5,(255,255,255), 1, cv2.LINE_AA)
 			
+
 			# show image
 			cv2.imshow('Doggy Cam: Standard View', frame)
 			cv2.imshow('Doggy Cam: Background Substraction', img_back_sub)
@@ -87,6 +94,16 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			# allow quitting by pressing q
 			print('Quitting...')
 			exit()
+
+	
+
+	# 2-D array with intensity and the annotated values for 
+	# clean up, if wrong frame_count can be fixed
+	temp = np.vstack((reference['reference'],intensity))
+	temp = temp.T
+
+	# export temp to csv 
+	file_handler.save_csv(filename, get_algorithm_version(), temp)
 
 	# save result with framerate and frame count in pickle file
 	file_handler.save_algorithm_result(filename, framerate, frame_count, result, get_algorithm_version())

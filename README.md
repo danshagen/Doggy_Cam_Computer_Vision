@@ -48,7 +48,7 @@ usage: run_algorithm.py [-h] [-s] file
 Run the motion detection algorithm on the given file.
 
 	It can show the processing happening live. The current motion detection
-	output is shown as a colored circle on top of the video in green (calm) or 
+	output is shown as a colored circle on top of the video in WHITE (calm) or 
 	red (motion detected).
 	The output is saved in the folder output.
 	The execution can be quit by pressing q, when focusing the output window.
@@ -70,8 +70,8 @@ output and the reference data (if available). It looks like this:
 
 ![](img/run_algorithm_ref.png)
 
-The circle in front (green) is the output of the algorithm and the circle half 
-shown (red) is the reference. Red means motion and green calm.
+The circle in front (WHITE) is the output of the algorithm and the circle half 
+shown (red) is the reference. Red means motion and WHITE calm.
 
 # Evaluating the algorithm
 The evaluation script is started like this:

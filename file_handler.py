@@ -1,5 +1,6 @@
 import os
 import pickle
+import numpy as np
 
 def save_algorithm_result(filename, frame_rate, frame_count, result, algorithm_version):
     data = {}
@@ -54,3 +55,8 @@ def load_reference_data(filename):
     except FileNotFoundError:
         print('Reference file not found.')
         return (False, None)
+
+def save_csv(filename, algorithm_version, intensities):
+	save_filename = '{}-{}_intensities.csv'.format(filename.split('.')[0], algorithm_version)
+	np.savetxt('output/intensities/{}'.format(save_filename), intensities, delimiter=',')
+	print('Saved intensities to {}'.format(save_filename))
