@@ -14,10 +14,9 @@ import plac
 import numpy as np
 import cv2
 import os
-from algorithm import motion_detection, get_algorithm_version, get_intensity
+from algorithm import motion_detection, get_algorithm_version
 import file_handler
 from evaluate_algorithm import update_frame_count
-import img_processor
 
 
 RED = (0, 0, 255)
@@ -59,14 +58,9 @@ def run_algorithm(file: str, show: bool=False) -> None:
 			break
 
 		# pass image to run_algorithm and save the result
-		result[n] = motion_detection(frame)
-		intensity[n] = get_intensity(frame)
+		result[n], intensity[n], img_back_sub = motion_detection(frame)
 
 		if show:
-			
-			img_back_sub = img_processor.get_background_substracted_img(frame)
-			img_back_sub = img_processor.convert2color(img_back_sub)
-
 			# add indicator for reference
 			if reference_available:
 
