@@ -8,7 +8,7 @@ import numpy as np
 import cv2 as cv
 
 ALGORITHM_NAME = 'intensity'
-ALGORITHM_VERSION = 'v3'
+ALGORITHM_VERSION = 'v4'
 
 back_sub = cv.createBackgroundSubtractorMOG2(detectShadows=False)
 
@@ -18,15 +18,20 @@ max_valid_intens = max_intens * .045
 # TODO soft code max intensity
 
 
-def motion_detection(frame: np.array) -> bool:
+def motion_detection(img: np.array) -> bool:
     """This function is called for every image in a video and returns whether 
     dog motion and activity was detected for that frame."""
 
-    back_sub_frame = back_sub.apply(frame, learningRate=-1)
+    img_motion = back_sub.apply(img, learningRate=-1)
+
+    # filter noise 
+    kernel = np.ones((4,4),np.uint8)
+    img_opening = cv.morphologyEx(img_motion, cv.MORPH_OPEN, kernel)
+    img_opening = cv.cvtColor(img_opening, cv.COLOR_GRAY2BGR) # only for the red dots
 
     # background subtraction
     # sum all motion pixels
-    sum = back_sub_frame.sum()
+    sum = img_motion.sum()
 
     result = False
     if(sum > threshold and sum < max_valid_intens):
@@ -38,7 +43,7 @@ def motion_detection(frame: np.array) -> bool:
     # print('above threshold? ' + str(check_threshold(intensity,threshold)))
 
     # return true
-    return result, sum, back_sub_frame
+    return result, sum, img_opening
 
 
 def get_algorithm_version() -> str:
@@ -47,4 +52,3 @@ def get_algorithm_version() -> str:
     The string contains the algorithm kind and a version, for example:
     dummy_v1 or simple_threshold_v2."""
     return '{}_{}'.format(ALGORITHM_NAME, ALGORITHM_VERSION)
-

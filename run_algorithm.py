@@ -67,6 +67,10 @@ def run_algorithm(file: str, show: bool=False) -> None:
 				col = RED if reference['reference'][n] else WHITE
 				cv2.circle(frame, center=(10, 10), radius=10, color=col, thickness=-1)
 				cv2.circle(img_back_sub, center=(10, 10), radius=10, color=col, thickness=-1)
+				# grab a few frames with motion
+				# if col == RED and n < 50:
+				# 	cv2.imwrite('img/filter_noise_{}.png'.format(n), img_back_sub)
+
 			# add indicator for algorithm
 			col = RED if result[n] else WHITE
 			cv2.circle(frame, center=(20, 10), radius=10, color=col, thickness=-1)
