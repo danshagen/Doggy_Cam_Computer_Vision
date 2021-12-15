@@ -66,7 +66,7 @@ def calculate_means(file, algorithm):
     
     if(algorithm):
         ref_array = np.zeros(len(array))
-        for i in range(len(array)):
+        for i in range(len(algorithm_data[0]['result'])):
             if(array[i,0] > algorithm_data[0]['result'][i]):
                 ref_array[i] = -1
             elif(algorithm_data[0]['result'][i] > array[i,0]):

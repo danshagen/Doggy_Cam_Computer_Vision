@@ -8,7 +8,7 @@ import numpy as np
 import cv2 as cv
 
 ALGORITHM_NAME = 'intensity'
-ALGORITHM_VERSION = 'v4'
+ALGORITHM_VERSION = 'v5'
 
 back_sub = cv.createBackgroundSubtractorMOG2(detectShadows=False)
 
@@ -17,7 +17,8 @@ max_intens = 640 * 480 * 3 * 127        # frame_width x frame_height x number of
 max_valid_intens = max_intens * .045
 # TODO soft code max intensity
 
-
+old_results = np.zeros(int(7.5 * 4))
+old_results_idx = 0
 def motion_detection(img: np.array) -> bool:
     """This function is called for every image in a video and returns whether 
     dog motion and activity was detected for that frame."""
@@ -42,7 +43,15 @@ def motion_detection(img: np.array) -> bool:
     # print('intensity = ' + str(intensity))
     # print('above threshold? ' + str(check_threshold(intensity,threshold)))
 
-    # return true
+    # save old results for averaging
+    global old_results, old_results_idx
+    old_results[old_results_idx] = result
+    old_results_idx += 1
+    if old_results_idx >= len(old_results):
+        old_results_idx = 0
+
+    result = np.average(old_results) >= 0.5
+
     return result, sum, img_opening
 
 
