@@ -35,7 +35,7 @@ def run():
 
 			# detect motion
 			result, _, _ = motion_detection(frame)
-			cv2.imshow('Doggy Cam: Standard View', frame) # DEBUG
+			# cv2.imshow('Doggy Cam: Standard View', frame) # DEBUG
 
 			# save video to file
 			webcam.write(frame)
@@ -50,7 +50,7 @@ def run():
 				temp.write(frame)
 			unrest = result
 
-			cv2.waitKey(1) # DEBUG
+			# cv2.waitKey(1) # DEBUG
 	except KeyboardInterrupt:
 		pass
 
