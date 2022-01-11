@@ -57,6 +57,11 @@ def run():
 				temp = cv2.VideoWriter('temp_{}.avi'.format(events), 
 										cv2.VideoWriter_fourcc(*'MJPG'),
 										10, size)
+				cv2.imwrite('temp.png', frame)
+				global bot
+				bot.send_photo(chat_id="-1001643202570", 
+					photo=open('temp.png', 'rb'),
+					caption="doggy movement!")
 			# active unrest
 			if result:
 				temp.write(frame)
@@ -67,7 +72,7 @@ def run():
 				global bot
 				bot.send_photo(chat_id="-1001643202570", 
 					photo=open('temp.png', 'rb'),
-					caption="doggy movement!")
+					caption="unrest over.")
 
 			unrest = result
 
