@@ -9,12 +9,6 @@ import telegram
 import numpy as np
 import cv2
 
-def start_bot():
-	"""Start the bot."""
-	global bot
-	bot = telegram.Bot("2071914358:AAH_aStmNRKCehcM-GlMlU1gC5WD7sJTcRM")
-	status = bot.send_message(chat_id="-1001643202570", text="Starting doggy cam!")
-
 
 def run():
 	"""Press Ctrl-C to terminate."""
@@ -29,7 +23,8 @@ def run():
 							 cv2.VideoWriter_fourcc(*'MJPG'),
 							 10, size)
 	print('Start telegram bot...')
-	start_bot()
+	bot = telegram.Bot("2071914358:AAH_aStmNRKCehcM-GlMlU1gC5WD7sJTcRM")
+	status = bot.send_message(chat_id="-1001643202570", text="Starting doggy cam!")
 
 	print('Starting doggy cam...')
 	events = 0 
@@ -38,7 +33,6 @@ def run():
 
 	try:
 		while True:
-			global frame
 			ret, frame = video.read()
 			if frame is None:
 				break
@@ -58,7 +52,6 @@ def run():
 										cv2.VideoWriter_fourcc(*'MJPG'),
 										10, size)
 				cv2.imwrite('temp.png', frame)
-				global bot
 				bot.send_photo(chat_id="-1001643202570", 
 					photo=open('temp.png', 'rb'),
 					caption="doggy movement!")
@@ -69,7 +62,6 @@ def run():
 			# unrest over
 			if not result and unrest:
 				cv2.imwrite('temp.png', frame)
-				global bot
 				bot.send_photo(chat_id="-1001643202570", 
 					photo=open('temp.png', 'rb'),
 					caption="unrest over.")
