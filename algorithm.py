@@ -8,13 +8,13 @@ import numpy as np
 import cv2 as cv
 
 ALGORITHM_NAME = 'intensity'
-ALGORITHM_VERSION = 'v5'
+ALGORITHM_VERSION = 'v6'
 
 back_sub = cv.createBackgroundSubtractorMOG2(detectShadows=False)
 
 threshold = 500000
-max_intens = 640 * 480 * 3 * 127        # frame_width x frame_height x number of cahnnels x max value per channel
-max_valid_intens = max_intens * .045
+max_intens = 640 * 480 * 127        # frame_width x frame_height x number of cahnnels x max value per channel
+max_valid_intens = max_intens * .8
 # TODO soft code max intensity
 
 old_results = np.zeros(int(7.5 * 4))
@@ -28,11 +28,13 @@ def motion_detection(img: np.array) -> bool:
     # filter noise 
     kernel = np.ones((4,4),np.uint8)
     img_opening = cv.morphologyEx(img_motion, cv.MORPH_OPEN, kernel)
-    img_opening = cv.cvtColor(img_opening, cv.COLOR_GRAY2BGR) # only for the red dots
+
 
     # background subtraction
     # sum all motion pixels
-    sum = img_motion.sum()
+    sum = img_opening.sum()
+    
+    img_opening = cv.cvtColor(img_opening, cv.COLOR_GRAY2BGR) # only for the red dots
 
     result = False
     if(sum > threshold and sum < max_valid_intens):
