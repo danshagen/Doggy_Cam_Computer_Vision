@@ -1,11 +1,10 @@
 # Exported using VGG Image Annotator (http://www.robots.ox.ac.uk/~vgg/software/via)
-# CSV_HEADER = metadata_id,file_list,temporal_segment_start,temporal_segment_end,metadata
-"7_oLc8O1Ar","[""John_4_3.mp4""]",1.113,2.79792,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_e6XFgEYE","[""John_4_3.mp4""]",278.339,281.06259,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_WXLDiXK9","[""John_4_3.mp4""]",308.575,311.78574,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_ZrGXUhTQ","[""John_4_3.mp4""]",631.393,634.66101,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_NcDtC6ua","[""John_4_3.mp4""]",659.916,663.80862,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_udmXmVdo","[""John_4_3.mp4""]",683.831,690.16194,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_airOGgLK","[""John_4_3.mp4""]",716.787,719.32154,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_uzza4CvK","[""John_4_3.mp4""]",759.25,774.6015,"{""TEMPORAL-SEGMENTS"":""default""}"
-"7_67AodHhM","[""John_4_3.mp4""]",849.832,853.6114,"{""TEMPORAL-SEGMENTS"":""default""}"
+# CSV_HEADER = metadata_id,file_list,flags,temporal_coordinates,spatial_coordinates,metadata
+"7_e6XFgEYE","[""John_4_3.mp4""]",277.98977,281.06259,"{""1"":""default""}"
+"7_WXLDiXK9","[""John_4_3.mp4""]",307.69063,312.09688,"{""1"":""default""}"
+"7_ZrGXUhTQ","[""John_4_3.mp4""]",631.09688,635.44063,"{""1"":""default""}"
+"7_NcDtC6ua","[""John_4_3.mp4""]",659.916,663.80862,"{""1"":""default""}"
+"7_udmXmVdo","[""John_4_3.mp4""]",683.831,690.16194,"{""1"":""default""}"
+"7_airOGgLK","[""John_4_3.mp4""]",716.787,719.32154,"{""1"":""default""}"
+"7_uzza4CvK","[""John_4_3.mp4""]",758.53438,774.6015,"{""1"":""default""}"
+"7_67AodHhM","[""John_4_3.mp4""]",849.832,853.6114,"{""1"":""default""}"
