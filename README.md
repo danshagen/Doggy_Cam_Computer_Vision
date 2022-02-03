@@ -1,40 +1,15 @@
 # Project: Doggy Cam
-## Project structure
-The project has the following folders and files (not complete):
-```
-.
-├── README.md
-├── algorithm.py            - implementation of the doggy cam algorithm
-├── evaluate_algorithm.py   - script to analyse the algorithm output with the 
-│                             reference
-├── convert_annotation.py   - convert the video annotation .csv files for the 
-│                             evaluate_algorithm script
-├── requirements.txt        - specifies the needed python modules for pip
-├── Makefile                - Makefile for converting annotations, running the 
-│                             algorithm and evaluating the algorithm output
-├── video                   - contains the video files, the annotation configuration
-│   ├── John_1.json           - video annotation tool project file
-│   ├── John_1.mp4            - video file
-│   ├── John_2_1.mp4
-│   ├── John_2_2.mp4
-│   ├── John_3.mp4
-│   ├── ...
-│   └── Makefile            - Makefile for converting .mov files to .mp4 video
-├── output        
-│   └── John_1-dummy_v1.pkl - algorithm output with version string
-└── reference
-    ├── John_1.csv          - video annotation output for video
-    └── John_1.pkl          - converted video annotation reference
-```
+## Abstract
+A monitoring system for dogs being left alone at home is developed using a Raspberry Pi, a webcam and computer vision algorithms. The system can monitor a room with a dog and evaluates whether the dog is in a calm or stressed state. It sends a notification to the owner when stress is detected.
 
-All python modules and scripts are put in the project root folder. The input and
-output files are in subfolders, as shown above.
+## Paper
+Is available in the root folder: <https://github.com/3dani33/Kamerabasierte_Anwendungen/blob/main/Raab%20Ueltzen%20%26%20Creutzburg%202022%20Monitoring%20Dog%20Movement%20When%20Left%20Alone.pdf>
 
 # Workflow
-For developing and improving the algorithm, the following workflow is proposed:
+For developing and improving the algorithm, the following workflow was used:
 
  1. Change algorithm in algorithm.py
- 2. Run algorithm on a video or all videos with run_algorithm.py (or Makefile)
+ 2. Run algorithm on a video or all videos with run_algorithm.py
  3. Evaluate algorithm with evaluate_algorithm.py and see if result is better than before
 
 # Running the algorithm
